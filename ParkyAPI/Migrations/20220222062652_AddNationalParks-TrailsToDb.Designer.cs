@@ -12,8 +12,8 @@ using ParkyAPI.Data;
 namespace ParkyAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220220093122_AddNationalParkToDb")]
-    partial class AddNationalParkToDb
+    [Migration("20220222062652_AddNationalParks-TrailsToDb")]
+    partial class AddNationalParksTrailsToDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,6 +49,48 @@ namespace ParkyAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("NationalParks");
+                });
+
+            modelBuilder.Entity("ParkyAPI.Models.Trail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Difficulty")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Distance")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NationalParkId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NationalParkId");
+
+                    b.ToTable("Trails");
+                });
+
+            modelBuilder.Entity("ParkyAPI.Models.Trail", b =>
+                {
+                    b.HasOne("ParkyAPI.Models.NationalPark", "NationalPark")
+                        .WithMany()
+                        .HasForeignKey("NationalParkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NationalPark");
                 });
 #pragma warning restore 612, 618
         }
