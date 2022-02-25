@@ -12,8 +12,8 @@ using ParkyAPI.Data;
 namespace ParkyAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220222062652_AddNationalParks-TrailsToDb")]
-    partial class AddNationalParksTrailsToDb
+    [Migration("20220223181245_AddUserToDb")]
+    partial class AddUserToDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,6 +68,9 @@ namespace ParkyAPI.Migrations
                     b.Property<double>("Distance")
                         .HasColumnType("float");
 
+                    b.Property<double>("Elevation")
+                        .HasColumnType("float");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -80,6 +83,31 @@ namespace ParkyAPI.Migrations
                     b.HasIndex("NationalParkId");
 
                     b.ToTable("Trails");
+                });
+
+            modelBuilder.Entity("ParkyAPI.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ParkyAPI.Models.Trail", b =>

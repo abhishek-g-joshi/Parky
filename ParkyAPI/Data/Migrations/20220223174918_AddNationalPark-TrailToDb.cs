@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParkyAPI.Migrations
 {
-    public partial class AddNationalParksTrailsToDb : Migration
+    public partial class AddNationalParkTrailToDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,6 +33,7 @@ namespace ParkyAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Distance = table.Column<double>(type: "float", nullable: false),
+                    Elevation = table.Column<double>(type: "float", nullable: false),
                     Difficulty = table.Column<int>(type: "int", nullable: false),
                     NationalParkId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
